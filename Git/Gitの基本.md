@@ -11,6 +11,7 @@
 - クローンコマンド
   `git clone` --> 既存のGitリポジトリのコピーの取得
   サーバーが保持するデータを、ほぼすべてコピーする
+---
 # Gitへの記録
 各ファイルは、追跡されているものと追跡されていないものがある。
 1. 追跡されているもの
@@ -18,8 +19,60 @@
    --> Gitは全てのファイルの状態をスナップショットを撮り、
    　　それへの参照を格納する
    -->スナップショットとは、ある時点の状態を記録・保存すること
+   ファイルは下記三つの状態がある
+   - 変更されていない
+   - 変更されている
+   - ステージされている
 2. 追跡されていないもの
    - スナップショットに存在しない、かつ、ステージングされていないこと
 3. 無視されるもの
    自動生成されるファイルやセキュリティー面で公開したくないもの
    .gitignoreファイルを作成して、そこに記載したファイルは監視されない
+ファイルが変更されれば、ファイルのステータスは変更されている状態となる。
+それをステージし、コミットするとGitで記録される。
+
+### 状態の確認
+`git status` -->ファイルがどの状態にあるかを知るために使用する
+最新状態や、追跡されていないファイルが存在しない場合````
+````
+git status
+On branch master
+nothing to commit, working directory clean
+````
+READMEファイルを新たに追加した場合
+```
+ git status
+On branch master
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+    README
+
+nothing added to commit but untracked files present (use "git add" to track)
+```
+---
+### ファイルの追跡の開始
+`git add` を使用する
+上記READMEファイルを追跡する場合
+`git add README`
+```
+git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+    new file:   README
+```
+ステージされているかの判断をChanges to be committed:ここに表示されているかで判断する。
+
+ステージされているファイルが変更された場合
+```console
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+    modified:   CONTRIBUTING.md
+```
+Changes not staged for commit:ここに表示される。
+同様にgit add CONTRIBUTING.mdすれば解決する
+※コミットする前に、また変更したら再度追加すること。
