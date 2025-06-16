@@ -76,3 +76,47 @@ Changes not staged for commit:
 Changes not staged for commit:ここに表示される。
 同様にgit add CONTRIBUTING.mdすれば解決する
 ※コミットする前に、また変更したら再度追加すること。
+
+---
+# 変更内容の確認
+`git status` コマンド --> ファイルの状態を確認
+`git diff` コマンド --> 変更行をパッチ形式で表示
+### オプション
+-  `git diff --staged` ステージされている変更と直近のコミットを比較
+  　※ステージされていない変更だけの表示である
+- `git diff --cashed` ステージした内容の履歴を見れる。
+
+---
+# コミット
+コミットの対象となるのは、ステージされたものだけ。
+つまり、`git add` をしていないファイルはコミットされない。
+`git commit` を実行すると、指定したエディタが立ち上がる。
+- `git config --global core.editor` エディタを指定できる
+- `git commit -v` diffの内容がエディタに表示される
+- `git commit -m` インライン形式でコミットメッセージを記述できる
+- `git commit -a` ステージングエリアを省略するためのショートカット
+  追跡対象のファイルを自動的にステージしてからコミットを行う
+  = `git add` の省略が可能
+
+--- 
+# 削除
+Gitから削除する場合の流れ
+追跡対象から外す --> コミット
+`git rm` --> `git commit`
+- もし、変更したファイルをすでにステージしている場合は
+  `git rm -f` で強制的に削除する
+- Gitで追跡はさせず、ファイルは残したい場合
+  `git rm --cached` 
+  他にもglobパターンを渡すことも可能
+  `git rm log/¥*.log` 
+  globパターンとは？ [[globパターン]]
+
+---
+# 移動
+Gitは明示的にファイルの移動を追跡しない。
+ファイル名を変更したい場合、下記を実行
+`git mb file_from file_to` 
+実際は、下記と同じことになる
+`mv README.md README
+git rm README.md
+git add README`
